@@ -1,0 +1,284 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{multirow}
+
+\begin{document}
+
+\title{Comprehensive Summary of Digital Image Processing Applications for Several Cases Across Multiple Domains}
+
+\author{\IEEEauthorblockN{Daffa M. Siddiq - 24/533358/PA/22569}
+\IEEEauthorblockA{\textit{Computer Science, Faculty of Mathematics and Natural Science} \\
+\textit{Universitas Gadjah Mada}\\
+Yogyakarta, Indonesia \\
+daffmaulns@gmail.com}
+}
+
+\maketitle
+
+\begin{abstract}
+The "mata kuliah" Pengolahan Citra Digital (PCD), or englishly said as Digital Image Processing (DIP), a cooler way of saying it, is a "mata kuliah" that studies images and the way to manipulate them to extract information and context. It is a transformative technology that continually aids in numerous domains and enables automated analysis and interpretation of visual data. This comprehensive summary I make will present three case studies in three different fields. The agricultural case (the same as my presentation material) uses recent research to highlight the critical importance of proper image acquisition parameters and quality control. The industrial PCB case demonstrates how feature selection and processing pipelines are modified to meet the requirements in manufacturing. Through detailed analysis, this comprehensive summary will provide a rough framework for selecting appropriate image processing methods and features based on specific requirements tailored for each domain.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+
+Digital image processing revolutionized numerous fields by enabling computers to interpret and analyze visual information with human-like or even better capabilities. And its crazy right? From using film to discrete bits, the transformation is very steep. And its great! Since now computers can now understand what we see too, well, sort of. The fundamental process of DIP involves acquiring images, pre-processing them to enhance quality, extracting meaningful features, and finally analyzing these features to make decisions or gain insights. This process is also generally known as the \textbf{AESFERM} framework, which stands for \textbf{A}cquisition, \textbf{E}xtraction, \textbf{S}egmentation, \textbf{F}eature \textbf{E}xtraction, \textbf{R}epresentation, and \textbf{M}atching. The selection of the appropriate features is crucial, as it directly impacts the accuracy and efficiency of the entire system. And of course, the computational power required. Since we might need to deploy these technologies in edge devices.
+
+Now here's the great part. Computers have become waaaaay smarter due to recent advances in deep learning, which significantly expanded the capabilities of image processing systems. However, traditional feature-based approaches remain highly relevant, since most people don't have access to 999 GB VRAM GPU, particularly in domains with limited data, computational constraints, or interpretability requirements. Which means that choosing features that work best for specific applications is essential for designing effective image processing pipelines. As said in abstract, we need to carefully select the operations and the features to extract, else our computational power might unnecessarily be waaaay to high, requiring us to buy a new PC.
+
+Now, this comprehensive summary presents three detailed case studies that demonstrate the practical application of digital image processing techniques. Section \ref{sec:case1} examines agricultural automation through the recognition of tobacco curing stages (this is my presentation btw). Its a cool experiment that involves very specific settings with light temperature, focal length, distortion, and lighting intensity. And being a camera person myself, I can see why I love this journal hehe. Section \ref{sec:case2} explores UAV-based crop phenotyping for precision agriculture. Which is very cool right? It compares the data obtained from the UAV with ground sensors as ground truth. And the drone (sheeeesh) is an expensive one (DJI Insprire RAW, there's RAW there!). Section \ref{sec:case3} investigates industrial quality control for PCB defect detection. This is to reduce the amount of bad mobos that reach your hand, PC Builders. So buckle up, for each case, comprehensive feature analysis and discussion about the relationship between feature selection and system performance is provided.
+
+\section{Case Study 1: Tobacco Curing Stage Recognition}
+\label{sec:case1}
+
+\subsection{Problem Definition}
+This is a great topic, I'll break it down so that it is easier to understand. You see, tobacco curing is a critical agricultural process that significantly impacts final product quality. And there are several strictly controlled process here. It's simple and not simple in the same time. The process involves three main stages: yellowing, color fixing, and midrib drying, with ten distinct sub-stages requiring precise environmental control \cite{feng2025}. This process used to \textbf{require} actual people to manually look at the leaves and determine the stages themselves. And sometimes it doesn't provide the best output. This is because manual monitoring is labor-intensive and prone to human error, making automated visual recognition highly sought after.
+
+Now this is the great thing. The primary challenge involves developing a robust system that can accurately classify tobacco leaves into the correct curing stages under varying environmental conditions, lighting variations, and different camera perspectives. And the author did a great job of varying these stuffs to put into the dataset and later analysed.
+
+\subsection{Image Processing Pipeline}
+Now here's the pipeline for this application. It involves several key stages:
+
+\begin{enumerate}
+    \item \textbf{Image Acquisition}: Critical first step involving camera positioning (where the camera is located), focal length selection (simpler terms -> zoom settings), and lighting configuration (light intensity, light temperature)
+    \item \textbf{Pre-processing}: Color correction, noise reduction, and image enhancement
+    \item \textbf{Feature Extraction}: Identifying discriminative visual characteristics
+    \item \textbf{Classification}: Using machine learning models for stage recognition
+\end{enumerate}
+
+They did a really great job. Wow. It really does take a lot of effort to do all those, including capturing the photos, compiling it into a dataset, and then making the code, all the way to running the code. The recent research by Feng et al. \cite{feng2025} demonstrated that optimal image acquisition parameters significantly impact system performance. And what they found was interesting, like, really interesting. Their findings showed that cameras with 30-35 cm focal length, cool white lighting, and middle-shed positioning achieved 99.84\% recognition accuracy using EfficientNetV2-S models. They did not need a powerful model nor intense image enhancement (which in turns need more computational power), because they solved that on their very very very specific image acquisition parameters.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\columnwidth]{tobacco_stages.png}
+    \caption{Visual progression of tobacco leaves through different curing stages showing color and texture changes}
+    \label{fig:tobacco_stages}
+\end{figure}
+
+\subsection{Feature Analysis}
+Having read all that, here is the most relevant features for tobacco curing stage recognition:
+
+\begin{table}[htbp]
+\caption{Feature Analysis for Tobacco Curing Stage Recognition}
+\label{tab:features_tobacco}
+\centering
+\begin{tabular}{|p{0.27\columnwidth}|p{0.27\columnwidth}|p{0.27\columnwidth}|}
+\hline
+\textbf{Feature Type} & \textbf{Specific Features} & \textbf{Rationale} \\
+\hline
+Color Features & HSV color space, Color histograms, Dominant colors & Leaf color transitions from green to yellow to brown indicate curing progress. HSV space effectively separates hue from illumination. \\
+\hline
+Texture Features & GLCM features, Local Binary Patterns & Leaf texture changes from smooth to wrinkled during curing. GLCM captures these textural transformations. \\
+\hline
+Shape Features & Leaf curl ratio, Edge detection, Contour analysis & Leaves curl progressively during curing. Shape descriptors quantify this physical transformation. \\
+\hline
+Deep Features & CNN-extracted features from layers & Automatically learned features that capture complex patterns not easily defined by traditional methods. \\
+\hline
+\end{tabular}
+\end{table}
+
+So, the color features are the most discriminative variable, particularly during the early yellowing stages, while texture and shape features become increasingly important during later stages as leaves curl and dry. As you can see from the image, the leaf still retains visible green-iness from Stage1 all the way to approx. Stage5, from then the green color starts to "dry-up" due to the process.
+
+\section{Case Study 2: UAV-Based Crop Phenotyping}
+\label{sec:case2}
+
+\subsection{Problem Definition}
+Alright, we're getting a bit more cool with this one. We're talking about Unmanned Aerial Vehicles (UAVs) equipped with imaging sensors. UAVs are being intensively explored for precise crop evaluation and high-throughput phenotyping. Sounds cool right? Yes, but consistent image quality is crucial for accurate plant trait prediction. And achieving this can be challenging as image qualities are affected by the UAV technical settings, environmental conditions, and crop characteristics \cite{priyanka2023}. And its very complicated, as crops are usually very easily affected by multiple factors.
+
+Now, the primary challenge here involves establishing robust protocols to acquire images of suitable quality and developing quantitative methods to check image quality post-acquisition for reliable phenotyping tasks. Or in other ways, we need to standardise a way to take photos from the sky.
+
+\subsection{Image Processing Pipeline}
+Now, since this involves expensive drones, the phenotyping pipeline involves:
+
+\begin{enumerate}
+    \item \textbf{Flight Planning}: Determining optimal altitude, speed, and overlap parameters
+    \item \textbf{Image Acquisition}: Capturing RGB images under varying environmental conditions
+    \item \textbf{Quality Assessment}: Calculating integrated image quality indicators (IIQIs). Fancy
+    \item \textbf{Feature Extraction}: Canopy segmentation and trait measurement
+    \item \textbf{Analysis}: Comparing UAV-based measurements with ground truth
+\end{enumerate}
+
+Research by Priyanka et al. \cite{priyanka2023} conducted 69 (nice) flights across different environmental conditions and technical setups, establishing quantitative thresholds for maintaining image quality. And of course, they came with their own pipeline from that reserach. Here's the pipeline.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\columnwidth]{uav_phenotyping.png}
+    \caption{A pipeline for UAV-based image acquisition system for crop phenotyping showing ground truth, UAV, camera setup, and the analysis. Looks fancy. The sensors must be expensive}
+    \label{fig:uav_setup}
+\end{figure}
+
+\subsection{Feature Analysis}
+Like the tobacco ones, there are several key features and quality metrics for UAV-based phenotyping:
+
+\begin{table}[htbp]
+\caption{These are the Feature Analysis for UAV-Based Crop Phenotyping}
+\label{tab:features_uav}
+\centering
+\begin{tabular}{|p{0.27\columnwidth}|p{0.27\columnwidth}|p{0.27\columnwidth}|}
+\hline
+\textbf{Feature Type} & \textbf{Specific Features} & \textbf{Rationale} \\
+\hline
+Image Quality Metrics & BRISQUE, NIQE, Blur-DCT & No-reference image quality assessment metrics that evaluate natural scene statistics and blur without requiring reference images. \\
+\hline
+Exposure Metrics & Over/under-exposed pixels & Quantifies improper exposure conditions that affect segmentation accuracy. \\
+\hline
+Spatial Features & Orthomosaic resolution, Point cloud density & Measures the geometric quality and detail level of reconstructed models from UAV imagery. \\
+\hline
+Canopy Features & HSV-based segmentation, Otsu thresholding & Enables separation of plant canopy from soil background for canopy cover calculation. \\
+\hline
+\end{tabular}
+\end{table}
+
+Using the expensive DJI drone with RAW capablities, and using the rather fancy expensive-looking canopy cover sensor, the study identified critical thresholds for maintaining quality: aperture $>$ 5.7, solar radiation $>$ 290.43 W/m², over-exposed pixels $<$ 26 per image, NIQE $<$ 2.9, and Blur-DCT $>$ 3.8 for accurate canopy cover estimation.
+
+\section{Case Study 3: PCB Defect Detection}
+\label{sec:case3}
+
+\subsection{Problem Definition}
+This is sometimes the cause of your malfunctioning laptop requiring multiple restarts, hard drive formats, windows reinstall, and lots of memory loss (not the RAM one, the "beautiful photos and videos taken by you" ones). This is the reason some of your devices (due to unluck) get broken and malfunctions despite multiple tries to save your precious data. The culprit is sometimes your broken motherboard itself. You see, Printed Circuit Board (PCB) defect detection is crucial in electronics manufacturing to ensure product quality and reliability. PCBs contain complex, minuscule elements that when defective can be challenging to detect \cite{schubeck2022}. And these maddening defects can originate from malicious actions (intellectual property infiltration, counterfeiting) or non-malicious causes (manufacturing errors, handling damage), both producing detrimental effects to board operation. And subsequently, your end device that you buy.
+
+Since a lot of PCBs are manufactured using your usual beep-bop beep-bop robots, automated visual inspection systems, the robots using fancy cameras overseeing the manufacturing robots, must identify various defects including short circuits, open circuits, missing components, incorrect component placement, solder bridges, and copper trace defects. That's a LOT right? The challenge here involves detecting microscopic defects at high speeds while maintaining low false-positive rates in complex board layouts. Which means that we need to work to solve this.
+
+\subsection{PCB Defect Taxonomy}
+Now, using the comprehensive taxonomy by Schubeck et al. \cite{schubeck2022}, PCB defects can be categorized into four main classes:
+
+\begin{enumerate}
+    \item \textbf{Trace Defects}: These are issues with conducting paths in your mobo, including additive defects (spurs, short circuits), subtractive defects (open circuits, mouse bites), and damaging defects (pinholes, scratches)
+    \item \textbf{Solder Defects}: These are problems with solder joints, including volume issues (bulbous joints, incomplete joints), and connection quality (cracked joints, poor wetting). Essentially, poor solder jobs resulting in poor mobo, and poor you
+    \item \textbf{Via and Pad Defects}: These are issues with inter-layer connections and component contacts including design errors (breakouts, wrong hole sizes) and physical damage (lifted pads, voids)
+    \item \textbf{Component Defects}: And also the problems with electronic components, including incorrect placement, missing components, and physical damage, which sucks if it happens to your very expensive and fancy mobo
+\end{enumerate}
+
+\subsection{Image Processing Pipeline}
+Since the journal provides the taxonomy, its our turn to guess what they usually do in the PCB inspection pipeline. Using the knowledge that we have, PCB inspection pipeline might include:
+
+\begin{enumerate}
+    \item \textbf{Image Acquisition}: High-resolution imaging with consistent lighting using specialized industrial cameras. Like the tobacco guys, they need hi-res cams with strictly controlled image acquisition parameters, because you need that for accurate results right? I mean, the tobacco guys proved it
+    \item \textbf{Board Alignment}: Registration with reference design using fiducial markers, which is object used to align or calibrate a vision system
+    \item \textbf{Segmentation}: Separating components, traces, and solder joints using morphological operations
+    \item \textbf{Defect Detection}: Comparing with golden template or design rules using template matching
+    \item \textbf{Classification}: Categorizing types of defect and severity levels using machine learning. We got this journal for detailed reference baby
+\end{enumerate}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\columnwidth]{pcb_defects.png}
+    \caption{Common PCB defects including damaged solder bridge, missing component, trace breakage, etc.}
+    \label{fig:pcb_defects}
+\end{figure}
+
+\subsection{Feature Analysis}
+Now, some critical features for PCB defect detection might include:
+
+\begin{table}[htbp]
+\caption{Feature Analysis for PCB Defect Detection}
+\label{tab:features_pcb}
+\centering
+\begin{tabular}{|p{0.27\columnwidth}|p{0.27\columnwidth}|p{0.27\columnwidth}|}
+\hline
+\textbf{Feature Type} & \textbf{Specific Features} & \textbf{Rationale} \\
+\hline
+Geometric Features & Trace width, pad dimensions, component placement & Verifies adherence to design specifications and identifies manufacturing deviations. Critical for detecting breakouts and wrong hole sizes. \\
+\hline
+Morphological Features & Solder joint shape, blob analysis, connectivity & Detects solder bridges, insufficient solder, and lifted components through shape analysis. Essential for identifying solder balls and bulbous joints. \\
+\hline
+Texture Features & Copper surface quality, solder finish uniformity & Identifies surface defects, oxidation, and finishing problems. Useful for detecting flux residues and contamination. \\
+\hline
+Template Features & Golden template comparison, difference maps & Compares manufactured board with reference design to identify discrepancies. Most reliable method for complex board layouts. \\
+\hline
+Spectral Features & Color consistency, reflectance properties & Detects material inconsistencies and contamination in solder joints and copper traces. \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Automated Detection Methods}
+Now, the current automated PCB defect detection used by some companies employs several approaches, and it usually involves some very fancy expensive equipments and stuffs, well they need to make sure that the failure rates are as low as possible so customer happy, company happy, investor happy, and man happy. Here's some of that methods:
+
+\begin{itemize}
+    \item \textbf{Commercial Systems}: Companies use advanced scanning technologies including CT x-ray and flatbed scanning overlapped with golden sample CAD data for comparison-based detection. Fancy.
+    \item \textbf{Deep Learning}: Convolutional Neural Networks (CNNs) classify defects by comparing test images with template images, though this requires availability of reference boards. Computationally expensive algorithms require expensive computers. Fancy.
+    \item \textbf{Unsupervised Methods}: Autoencoders and feature extractors enable defect detection with minimal training data, suitable for assembly line environments.
+    \item \textbf{One-Class Training}: Transfer learning approaches using pre-trained models can detect anomalies without extensive labeled datasets.
+\end{itemize}
+
+Upon checking PCBs, usually, the geometric features are particularly important for verifying trace widths and component placements, while the morphological features is very good at detecting solder joint defects. Template-based comparison (which means using some kind of ground truth for comparison) remains the most reliable method for complex board layouts, though it requires access to reference designs, BIG dataset, powerful machine-learning models, and of course, expensive pc. They got a lot of money to get job done. 
+
+\section{Comparative Analysis and Discussion}
+\label{sec:comparison}
+
+Now we arrive on the comparison part, this is where we analyse the methods, compare it (because why not), and discuss about it. Alright then, the three case studies demonstrate how feature selection must be tailored to specific application requirements (or simply, depends on context) while following common principles of digital image processing. This table \ref{tab:comparison} provides a comparative analysis of the feature requirements across different usage in the respective domains that we have talked about.
+
+\begin{table}[htbp]
+\caption{Comparative Analysis of Feature Requirements Across Domains}
+\label{tab:comparison}
+\centering
+\begin{tabular}{|p{0.2\columnwidth}|p{0.2\columnwidth}|p{0.2\columnwidth}|p{0.2\columnwidth}|}
+\hline
+\textbf{Aspect} & \textbf{Tobacco Curing} & \textbf{UAV Phenotyping} & \textbf{PCB Inspection} \\
+\hline
+Primary Features & Color, Texture & Quality Metrics, Spatial & Geometric, Morphological \\
+\hline
+Critical Parameters & Lighting, Camera position & Altitude, Overlap, Environment & Resolution, Lighting \\
+\hline
+Accuracy Requirements & Very High (>99\%) & High (>90\%) & Extremely High (>99.9\%) \\
+\hline
+Processing Speed & Near Real-time & Post-processing & Real-time \\
+\hline
+Key Challenge & Environmental variation & Image quality control & Microscopic defects \\
+\hline
+Common Algorithms & CNN, Traditional ML & Segmentation, Quality Metrics & Template Matching, Morphology \\
+\hline
+\end{tabular}
+\end{table}
+
+Now that's some comparison. Here's several important observations that we can see from this analysis:
+
+\textbf{Color Features} dominate in agricultural applications where biological processes cause visible color changes. Particularly in image acquisition part also, since we need the light to be cool, cause warm light might interfere with the camera readings for the brown-looking tobacco leaf during later stages (if you look at the journal, some of the stages were misidentified as other ones, and it happens where the light is warm). The tobacco guys told us just how important proper image acquisition setup is, that it dramatically improves color-based feature extraction, and helps with properly and correctly identifying the tobacco curing stages using color.
+
+\textbf{Quality Control Features} are crucial in UAV-based applications where environmental factors and technical settings significantly impact data quality. I mean, we're talking about crops. And crops are affected by a lot of factors. Seasons, sun conditions, cloud, rain, humidity, watering methods, fertilizer (if used), soil type, soil this, soil that, there's a BUNCH of factors need to be taken into account. The UAV guys demonstrates the importance of establishing quantitative thresholds for image quality indicators. And the proper pipeline for it. Oh, and also using the right sensor for ground truthing.
+
+\textbf{Geometric and Morphological Features} are very important and it excels in industrial inspection applications where defects manifest as deviations from the manufacturer's designed specifications, when the beep-bop robots starts to make things outside the tolerance allowed. The precision required in PCB inspection demands high-resolution imaging and sophisticated geometric analysis (expensive cameras), with defect taxonomies categorizing issues by their physical characteristics. Expensive powerful and very capable PCs and strong machine-learning models.
+
+Like a lot of things in life, we can defer some kind of common theme across all domains, and it is the critical importance of \textbf{proper} image acquisition. As demonstrated in both agricultural case studies, optimal camera \textit{placement}, \textit{lighting} conditions, and technical \textit{parameters} can significantly improve accuracy, like, really significant, it shows that feature extraction cannot compensate for poor acquisition. And image enhancement won't help much either if the image is not properly exposed.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+We are now on the end of "tugas 4 mata kuliah PCD", and I will give you a summary of what we have talked about. Juuuust one more subsection before the references.
+
+This comprehensive summary that was made has presented three comprehensive case studies with three different groups of cool guys demonstrating the application of digital image processing across diverse domains, in this case agricultural and industrial manufacturing. Through detailed feature analysis, successful implementation requires careful selection of features tailored to specific application requirements while maintaining high standards in image acquisition and quality control. Essentially very accurate and very proper checking standards to make sure that the conclusion is accurate.
+
+The agricultural case studies by the tobacco guys and the UAV guys highlighted the critical importance of color features and systematic quality assessment in biological applications. On the other hand, the industrial PCB inspection case by the PCB taxonomy guys (and us, with some educated guess and some google search) demonstrated the value of geometric and morphological features for precision manufacturing, with comprehensive defect taxonomies providing structured frameworks for accurate detection and prevent end users from getting defective motherboards for their new PCs.
+
+Here's several key recommendations from this very comprehensive analysis that I made:
+\begin{itemize}
+    \item Feature selection \textbf{must} align with the visual characteristics of the target application, proper context on what do you want to do (is it agricultural, medical, industrial, etc.)
+    \item Image acquisition parameters are very important and must be constrained to ensure consistent readings
+    \item Domain-specific knowledge is very very very essential for identifying discriminative features. Machine learning models are "garbage in, garbage out" systems, and it requires the "you" part to determine whether the model spits out accurate results that doesn't make your blood boil
+    \item Quality control mechanisms are crucial for maintaining system reliability. Customers will be mad, investor will be mad, man will be mad, everyone mad. If your product keeps on failing, you're gonna lose money and cease from manufacturing pretty soon
+    \item Different domains require different balances between accuracy and processing speed. Some domains require very expensive pc and fancy equipments, while some might only need some edge devices that doesn't require much power to run. Like the one that the tobacco guys made, they use efficient models combined with \textbf{strict} image acquisition which significantly improve their accuracy without the need for computationally expensive image enhancement methods.
+\end{itemize}
+
+
+As always, nothing is perfect. And future work should explore adaptive feature selection methods that can automatically identify optimal feature sets for new applications. The establishment of standardized quality assessment protocol pipelines, as demonstrated by the UAV guys, represents an important direction for improving interoperability and reproducibility in digital image processing applications, while maintaining consistent workflow for the better. For PCB inspection, developing low-cost automated methods to detect the comprehensive range of defects remains an important research direction as they were (and still is) using very expensive PCs and fancy equipments to detect and rectify PCB problems.
+
+Alright then, thank you very much for reading this report. I wish you a good day, and until next time. Bye!
+
+LOCALLY ROOTED, GLOBALLY RESPECTED.
+
+\begin{thebibliography}{00}
+\bibitem{feng2025} C. Feng, S. Zhu, M. Tang, H. Zhao, Q. Yuan, and B. Wang, ``Study on image acquisition and camera positioning of depth recognition model in the tobacco curing stage,'' Engineering Applications of Artificial Intelligence, vol. 143, p. 109992, 2025.
+\bibitem{priyanka2023} G. Priyanka, S. Choudhary, K. Anbazhagan, D. Naresh, R. Baddam, J. Jarolimek, Y. Parnandi, P. Rajalakshmi, and J. Kholova, ``A step towards inter-operable Unmanned Aerial Vehicles (UAV) based phenotyping; A case study demonstrating a rapid, quantitative approach to standardize image acquisition and check quality of acquired images,'' ISPRS Open Journal of Photogrammetry and Remote Sensing, vol. 9, p. 100042, 2023.
+\bibitem{schubeck2022} J. Schubeck, D. Koblah, U. J. Botero, and D. Forte, ``A Comprehensive Taxonomy of PCB Defects,'' 2022. [Online]. Available at: \url{https://dforte.ece.ufl.edu/wp-content/uploads/sites/65/2022/02/A_Comprehensive_Taxonomy_of_PCB_Defects.pdf}
+\end{thebibliography}
+
+\end{document}
